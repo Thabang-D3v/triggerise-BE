@@ -1,0 +1,8 @@
+server:
+  servlet:
+    contextPath: /triggerise/v1
+  port: 8003
+spring:
+  profiles:
+
+
