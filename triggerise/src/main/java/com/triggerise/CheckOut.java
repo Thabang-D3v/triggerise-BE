@@ -20,6 +20,12 @@ public class CheckOut {
     public CheckOut (String pricingRules){
         this.pricingRules=pricingRules;
     }
+
+    /**
+     *
+     * @param code the code of the product being purchased
+     * @throws ItemNotFoundException when the code doesn't match any products
+     */
     private  void addItem(String code) throws ItemNotFoundException{
         switch (code){
             case "MUG":{
@@ -51,38 +57,53 @@ public class CheckOut {
         }
 
     }
-    public BigDecimal total(){
+
+    /**
+     * calculates the total price of all the items being purchased
+     * taking into account the 2-for-1 and the 30% discount on the different items
+     * @return the value price
+     */
+    public BigDecimal total(){//calculate the total price of the checkout
         double totalPrice=0;
                totalPrice+=mugDiscount();
                totalPrice+=bulkPrice(tShirts);
                totalPrice+=bulkPrice(keys);
         DecimalFormat df = new DecimalFormat("#.##");
         df.setRoundingMode(RoundingMode.CEILING);
-        totalPrice=Double.parseDouble(df.format(totalPrice).replace(',','.'));
+        totalPrice=Double.parseDouble(df.format(totalPrice).replace(',','.'));//round of to two decimals
        return BigDecimal.valueOf(totalPrice);
 
     }
 
-    public CheckOut scan(String code)throws ItemNotFoundException{
+    /**
+     *
+     * @param code the code of the item being purchased
+     * @return this instance of the class where the calculation is taking place
+     * @throws ItemNotFoundException when/if the code doesn't match any products
+     */
+
+    public CheckOut scan(String code)throws ItemNotFoundException{//scan the products
             addItem(code);
             return this;
     }
 
-    private double bulkPrice(List<Product>items){
+    /**
+     * method for calculating the bulk price of the items
+     * @param items items to be scanned
+     * @return the price of the products being purchased
+     */
+
+    private double bulkPrice(List<Product>items){//calculate the bulk price @ 30% discount
         if (items.isEmpty())
             return 0;
         return items.size()>=3?items.size()*items.get(0).getPrice()*0.7://price if discount is available
                 items.size()*items.get(0).getPrice();//price if discount is not applicable
     }
 
-    private double noDiscount(){//get the no discount amount
-        double totalMugs=mugs.isEmpty()?0:mugs.size()*mugs.get(0).getPrice();
-        double totalShirts=tShirts.isEmpty()?0:tShirts.size()*tShirts.get(0).getPrice();
-        double totalKeys=keys.isEmpty()?0:keys.size()*keys.get(0).getPrice();
-        return totalMugs+totalKeys+totalShirts;
-
-    }
-
+    /**
+     * method for calculating the 2 for 1 discount for mugs
+     * @return the total price of the mugs
+     */
     private double mugDiscount(){
         if (!mugs.isEmpty()){
             int size= mugs.size();
@@ -90,7 +111,6 @@ public class CheckOut {
                return mugs.get(0).getPrice()*(size/2);
             }else
                 return mugs.get(0).getPrice()*(size/2)+mugs.get(0).getPrice();
-
         }
         return 0;
     }
