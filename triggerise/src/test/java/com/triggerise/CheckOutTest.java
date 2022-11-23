@@ -58,4 +58,21 @@ class CheckOutTest {
                 .total();
         Assertions.assertEquals(BigDecimal.valueOf(62.10),price);
     }
+
+    @Test
+    void Test3Bulk(){
+        CheckOut checkOut=new CheckOut("bulk");
+        BigDecimal price=checkOut
+                .scan("MUG")
+                .scan("TSHIRT")
+                .scan("MUG")
+                .scan("MUG")
+                .scan("USBKEY")
+                .scan("TSHIRT")
+                .scan("TSHIRT")
+                .scan("USBKEY")
+                .scan("USBKEY")
+                .total();
+        Assertions.assertEquals(BigDecimal.valueOf(73.10),price);
+    }
 }

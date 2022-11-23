@@ -24,9 +24,9 @@ public class CheckOut {
     /**
      *
      * @param code the code of the product being purchased
-     * @throws ItemNotFoundException when the code doesn't match any products
+     * @throws IllegalArgumentException when the code doesn't match any products
      */
-    private  void addItem(String code) throws ItemNotFoundException{
+    private  void addItem(String code) throws IllegalArgumentException{
         switch (code){
             case "MUG":{
                 mugs.add( Product.builder()
@@ -52,7 +52,7 @@ public class CheckOut {
                 break;
 
             }
-            default: throw new ItemNotFoundException("Product with code not found: "+code);
+            default: throw new IllegalArgumentException("Product with code not found: "+code);
 
         }
 
@@ -79,10 +79,10 @@ public class CheckOut {
      *
      * @param code the code of the item being purchased
      * @return this instance of the class where the calculation is taking place
-     * @throws ItemNotFoundException when/if the code doesn't match any products
+     * @throws IllegalArgumentException when/if the code doesn't match any products
      */
 
-    public CheckOut scan(String code)throws ItemNotFoundException{//scan the products
+    public CheckOut scan(String code)throws IllegalArgumentException{//scan the products
             addItem(code);
             return this;
     }
