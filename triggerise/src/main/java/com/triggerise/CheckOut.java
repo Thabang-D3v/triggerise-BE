@@ -53,22 +53,9 @@ public class CheckOut {
     }
     public BigDecimal total(){
         double totalPrice=0;
-       switch (pricingRules){
-           case "2-for-1":{
-               totalPrice+=mugDiscount();
-               break;
-           }
-           case "bulk":{
                totalPrice+=mugDiscount();
                totalPrice+=bulkPrice(tShirts);
                totalPrice+=bulkPrice(keys);
-               break;
-
-           }
-           default:{
-               totalPrice=noDiscount();
-           }
-       }
         DecimalFormat df = new DecimalFormat("#.##");
         df.setRoundingMode(RoundingMode.CEILING);
         totalPrice=Double.parseDouble(df.format(totalPrice).replace(',','.'));
