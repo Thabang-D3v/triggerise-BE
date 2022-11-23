@@ -16,7 +16,7 @@ public class RestResponseEntityExceptionHandler
 
     @ExceptionHandler(value
             = { IllegalArgumentException.class, IllegalStateException.class })
-    protected ResponseEntity<Object> handleConflict(
+    protected ResponseEntity<Object> handleException(
             RuntimeException ex, WebRequest request) {
         ExceptionResponse bodyOfResponse =ExceptionResponse.builder()
                 .message(ex.getMessage()).timeStamp(LocalDateTime.now()).build();
